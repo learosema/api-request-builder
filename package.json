@@ -1,0 +1,38 @@
+{
+  "name": "api-request-builder",
+  "version": "1.0.0",
+  "description": "A playground for XmlHttpRequests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel src/index.html",
+    "build": "parcel build --public-url . src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terabaud/api-request-builder.git"
+  },
+  "keywords": [
+    "api",
+    "tool"
+  ],
+  "author": "Lea Rosema",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/terabaud/api-request-builder/issues"
+  },
+  "homepage": "https://github.com/terabaud/api-request-builder#readme",
+  "dependencies": {
+    "vue": "^2.5.16",
+    "vue-hot-reload-api": "^2.3.0"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^2.1.0",
+    "babel-preset-env": "^1.7.0",
+    "parcel-bundler": "^1.9.6",
+    "postcss-modules": "^1.1.0",
+    "postcss-preset-env": "^5.2.1",
+    "pug": "^2.0.3",
+    "vue-template-compiler": "^2.5.16"
+  }
+}
