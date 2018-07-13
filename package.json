@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel src/index.html",
-    "build": "parcel build --public-url . src/index.html"
+    "build": "parcel build --public-url . src/index.html",
+    "clean": "rimraf dist/index.*.css dist/index.*.js dist/index.*.map",
+    "predeploy": "npm run clean -s && npm run build -s",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -29,10 +32,12 @@
   "devDependencies": {
     "@vue/component-compiler-utils": "^2.1.0",
     "babel-preset-env": "^1.7.0",
+    "gh-pages": "^1.2.0",
     "parcel-bundler": "^1.9.6",
     "postcss-modules": "^1.1.0",
     "postcss-preset-env": "^5.2.1",
     "pug": "^2.0.3",
+    "rimraf": "^2.6.2",
     "vue-template-compiler": "^2.5.16"
   }
 }
