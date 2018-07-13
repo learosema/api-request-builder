@@ -1,0 +1,75 @@
+body {
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 1.2;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+fieldset {
+  margin: 1em 0;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  background: #eee;
+}
+
+legend {
+  font-family: sans-serif;
+  font-size: 80%;
+  color: #fff;
+  font-weight: bold;
+  background: #49f;
+  padding: 0.1em 0.5em;
+  border-radius: 8px;
+}
+
+@media (max-width: 500px) {
+  fieldset label {
+    display: block;
+  }
+  
+  fieldset input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  input + button, input + input, select + input {
+    margin: 0.5em 0 0 0;
+  }
+}
+
+fieldset textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+fieldset > section, fieldset > table {
+  margin: .5em 0;
+}
+
+fieldset > table {
+  width: 100%;
+  border-style: collaped;
+  border: 1px solid #ccc;
+}
+
+fieldset table td input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+fieldset > ol {
+  padding: 0 1em;
+}
+
+fieldset > ol > li {
+  margin: .5em 0;
+}
+
+fieldset._response_1n6zn_145 > legend {
+  background: #f72;
+}
