@@ -62,3 +62,6 @@ typings/
 
 # dev/production build
 dist
+
+# cache
+.cache
