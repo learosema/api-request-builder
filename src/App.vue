@@ -32,7 +32,7 @@
       <legend>Request Params</legend>
       <button @click="addRequestParam"> add param </button>
       <ol>
-        <li v-for="(param, index) in params">
+        <li :key="param" v-for="(param, index) in params">
           <label :for="'param'+index">Key</label>
           <input :name="'param'+index" v-model="param.key">
           <label :for="'value'+index">Value</label>
@@ -53,7 +53,7 @@
       <button @click="addRequestBodyParam"> add param </button>
       </section>
       <ol>
-        <li v-for="(param, index) in bodyParams">
+        <li :key="param" v-for="(param, index) in bodyParams">
           <label :for="'bparam'+index">Key</label>
           <input :name="'bparam'+index" v-model="param.key">
           <label :for="'bvalue'+index">Value</label>
@@ -67,117 +67,136 @@
       <legend>Response</legend>  
       <section>Status: {{response.status}}</section>
       <table>
-        <tr v-for="(value, key) in response.headers">
+        <tr :key="key" v-for="(value, key) in response.headers">
           <td style="width: 20%"><input :value="key" readonly></td>
           <td><input :value="value" readonly></td>
         </tr>
       </table>
-      <textarea rows="5" readonly>{{response.body}}</textarea>
+      <textarea rows="5" readonly v-model="response.body"></textarea>
     </fieldset>
   </main>
 </template>
 
 <script>
-// helper function from MDN 
+// helper function from MDN
 // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
-const parseHeaders = (xhr) => {  
-  const headers = xhr.getAllResponseHeaders().trim().split(/[\r\n]+/);
-  const headerMap = {}
-  headers.forEach(function (line) {
-    const parts = line.split(': ')
-    const header = parts.shift().toLowerCase()
-    const value = parts.join(': ')
-    headerMap[header] = value
-  })
-  return headerMap
-}
+const parseHeaders = xhr => {
+  const headers = xhr
+    .getAllResponseHeaders()
+    .trim()
+    .split(/[\r\n]+/);
+  const headerMap = {};
+  headers.forEach(function(line) {
+    const parts = line.split(": ");
+    const header = parts.shift().toLowerCase();
+    const value = parts.join(": ");
+    headerMap[header] = value;
+  });
+  return headerMap;
+};
 
 export default {
-  data () {
+  data() {
     return {
-      method: 'GET',
-      url: 'https://yesno.wtf',
-      auth: 'none',
-      path: '/api',
-      httpUser: '',
-      httpPassword: '',
+      method: "GET",
+      url: "https://yesno.wtf",
+      auth: "none",
+      path: "/api",
+      httpUser: "",
+      httpPassword: "",
       params: [],
       bodyParams: [],
-      contentType: 'application/json',
+      contentType: "application/json",
       response: {
-        status: '',
-        headers: '',
+        status: "",
+        headers: "",
         body: ""
       }
-    }
+    };
   },
   computed: {
-    rawRequestBody () {
-      const { bodyParams } = this
-      if (this.contentType === 'application/json') {
+    rawRequestBody() {
+      const { bodyParams } = this;
+      if (this.contentType === "application/json") {
         try {
           const obj = JSON.parse(`{
             ${bodyParams
-                .filter(p => !!p.key)
-                .map(p => `"${p.key}": "${p.value}"`).join()}
-          }`)
-          return JSON.stringify(obj)  
+              .filter(p => !!p.key)
+              .map(p => `"${p.key}": "${p.value}"`)
+              .join()}
+          }`);
+          return JSON.stringify(obj);
         } catch (ex) {
-          return "invalid"
+          return "invalid";
         }
       } else {
         return bodyParams
           .filter(p => !!p.key)
-          .map(p => p.key + '=' + encodeURIComponent(p.value)).join('&')
+          .map(p => p.key + "=" + encodeURIComponent(p.value))
+          .join("&");
       }
     },
-    queryString () {
+    queryString() {
       const result = this.params
         .filter(p => !!p.key)
-        .map(p => p.key + '=' + encodeURIComponent(p.value)).join('&')
-      return result == '' ? '' : ('?' + result)
+        .map(p => p.key + "=" + encodeURIComponent(p.value))
+        .join("&");
+      return result === "" ? "" : "?" + result;
     }
   },
   methods: {
-    sendRequest () {
-      const xhr = new XMLHttpRequest()
-      const user = this.auth === 'Basic' ? this.httpUser : null
-      const pswd =  this.auth === 'Basic' ? this.httpPassword : null
-      xhr.open(this.method, this.url + this.path + this.queryString, true, user, pswd)
+    sendRequest() {
+      const xhr = new XMLHttpRequest();
+      const user = this.auth === "Basic" ? this.httpUser : null;
+      const pswd = this.auth === "Basic" ? this.httpPassword : null;
+      xhr.open(
+        this.method,
+        this.url + this.path + this.queryString,
+        true,
+        user,
+        pswd
+      );
       if (this.method === "POST" || this.method === "PUT") {
-        const requestBody = this.rawRequestBody
-        xhr.setRequestHeader('Content-Length', requestBody.length)
-        xhr.setRequestHeader('Content-Type', this.contentType + '; charset=utf-8')
-        xhr.send(requestBody)  
+        const requestBody = this.rawRequestBody;
+        xhr.setRequestHeader("Content-Length", requestBody.length);
+        xhr.setRequestHeader(
+          "Content-Type",
+          this.contentType + "; charset=utf-8"
+        );
+        xhr.send(requestBody);
       } else {
-        xhr.send()
+        xhr.send();
       }
       xhr.onload = e => {
-        this.response.status = xhr.status        
-        const headers = this.response.headers = parseHeaders(xhr)
-        if ((headers["content-type"]||"").startsWith("application/json")) {
-          this.response.body = JSON.stringify(JSON.parse(xhr.responseText), null, 2)
+        this.response.status = xhr.status;
+        const headers = (this.response.headers = parseHeaders(xhr));
+        if ((headers["content-type"] || "").startsWith("application/json")) {
+          this.response.body = JSON.stringify(
+            JSON.parse(xhr.responseText),
+            null,
+            2
+          );
         } else {
-          this.response.body = xhr.responseText  
+          this.response.body = xhr.responseText;
         }
-      }
+      };
     },
-    addRequestParam () {
-      this.params.push({key: '', value: ''})
-      return false
+    addRequestParam() {
+      this.params.push({ key: "", value: "" });
+      return false;
     },
-    removeRequestParam (index) {
-      this.params.splice(index, 1)
+    removeRequestParam(index) {
+      this.params.splice(index, 1);
     },
-    addRequestBodyParam () {
-      this.bodyParams.push({key: '', value: ''})
-      return false
+    addRequestBodyParam() {
+      this.bodyParams.push({ key: "", value: "" });
+      return false;
     },
-    removeRequestBodyParam (index) {
-      this.bodyParams.splice(index, 1)
+    removeRequestBodyParam(index) {
+      this.bodyParams.splice(index, 1);
     }
   }
-}
+};
 </script>
 
 <style lang="css" scoped>
