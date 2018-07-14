@@ -1,0 +1,62 @@
+
+main[data-v-fa0242] {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+fieldset[data-v-fa0242] {
+  margin: 1em 0;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  background: #eee;
+}
+legend[data-v-fa0242] {
+  font-family: sans-serif;
+  font-size: 80%;
+  color: #fff;
+  font-weight: bold;
+  background: #49f;
+  padding: 0.1em 0.5em;
+  border-radius: 8px;
+}
+@media (max-width: 500px) {
+fieldset label[data-v-fa0242] {
+    display: block;
+}
+fieldset input[data-v-fa0242] {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+input + button[data-v-fa0242], input + input[data-v-fa0242], select + input[data-v-fa0242] {
+    margin: 0.5em 0 0 0;
+}
+}
+fieldset textarea[data-v-fa0242] {
+  width: 100%;
+  box-sizing: border-box;
+}
+fieldset > section[data-v-fa0242], fieldset > table[data-v-fa0242] {
+  margin: .5em 0;
+}
+fieldset > table[data-v-fa0242] {
+  width: 100%;
+  border-style: collaped;
+  border: 1px solid #ccc;
+}
+fieldset table td input[data-v-fa0242] {
+  width: 100%;
+  box-sizing: border-box;
+}
+fieldset > ol[data-v-fa0242] {
+  padding: 0 1em;
+}
+fieldset > ol > li[data-v-fa0242] {
+  margin: .5em 0;
+}
+fieldset.api-response > legend[data-v-fa0242] {
+  background: #f72;
+}body {
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 1.2;
+}

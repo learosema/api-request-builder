@@ -1,0 +1,29 @@
+
+main[data-v-fa0242]{margin:0 auto;max-width:1000px
+}
+fieldset[data-v-fa0242]{background:#eee;border:1px solid #ddd;border-radius:2px;margin:1em 0
+}
+legend[data-v-fa0242]{background:#49f;border-radius:8px;color:#fff;font-family:sans-serif;font-size:80%;font-weight:700;padding:.1em .5em
+}
+@media (max-width:500px){
+fieldset label[data-v-fa0242]{display:block
+}
+fieldset input[data-v-fa0242]{box-sizing:border-box;display:block;width:100%
+}
+input+button[data-v-fa0242],input+input[data-v-fa0242],select+input[data-v-fa0242]{margin:.5em 0 0
+}
+}
+fieldset textarea[data-v-fa0242]{box-sizing:border-box;width:100%
+}
+fieldset>section[data-v-fa0242],fieldset>table[data-v-fa0242]{margin:.5em 0
+}
+fieldset>table[data-v-fa0242]{border:1px solid #ccc;width:100%
+}
+fieldset table td input[data-v-fa0242]{box-sizing:border-box;width:100%
+}
+fieldset>ol[data-v-fa0242]{padding:0 1em
+}
+fieldset>ol>li[data-v-fa0242]{margin:.5em 0
+}
+fieldset.api-response>legend[data-v-fa0242]{background:#f72
+}body{font-family:sans-serif;font-size:100%;line-height:1.2}
