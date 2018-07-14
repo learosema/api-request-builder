@@ -31,7 +31,6 @@
     <fieldset>
       <legend>Request Params</legend>
       <button @click="addRequestParam"> add param </button>
-      </section>
       <ol>
         <li v-for="(param, index) in params">
           <label :for="'param'+index">Key</label>
