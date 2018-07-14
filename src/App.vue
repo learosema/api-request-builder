@@ -64,7 +64,7 @@
       </ol>
       <pre><code>{{rawRequestBody}}</code></pre>
     </fieldset>
-    <fieldset class="response">
+    <fieldset class="api-response">
       <legend>Response</legend>  
       <section>Status: {{response.status}}</section>
       <table>
@@ -180,12 +180,7 @@ export default {
 }
 </script>
 
-<style lang="css">
-body {
-  font-family: sans-serif;
-  font-size: 100%;
-  line-height: 1.2;
-}
+<style lang="css" scoped>
 
 main {
   max-width: 1000px;
@@ -253,8 +248,7 @@ fieldset > ol > li {
   margin: .5em 0;
 }
 
-fieldset.response > legend {
+fieldset.api-response > legend {
   background: #f72;
 }
-
 </style>

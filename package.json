@@ -1,7 +1,7 @@
 {
   "name": "api-request-builder",
   "version": "1.0.0",
-  "description": "A playground for XmlHttpRequests",
+  "description": "A playground for XMLHttpRequests",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/terabaud/api-request-builder#readme",
   "dependencies": {
+    "css": "^2.2.3",
     "vue": "^2.5.16",
     "vue-hot-reload-api": "^2.3.0"
   },
