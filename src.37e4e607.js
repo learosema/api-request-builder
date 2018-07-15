@@ -7384,6 +7384,27 @@ if (inBrowser) {
 /*  */
 
 exports.default = Vue;
+},{}],"helpers\\parseHeaders.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = parseHeaders;
+// helper function from MDN
+// https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
+
+function parseHeaders(xhr) {
+  var headers = xhr.getAllResponseHeaders().trim().split(/[\r\n]+/);
+  var headerMap = {};
+  headers.forEach(function (line) {
+    var parts = line.split(": ");
+    var header = parts.shift().toLowerCase();
+    var value = parts.join(": ");
+    headerMap[header] = value;
+  });
+  return headerMap;
+}
 },{}],"..\\node_modules\\parcel-bundler\\src\\builtins\\bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
@@ -7687,121 +7708,34 @@ exports.reload = tryWrap(function (id, options) {
   })
 })
 
-},{}],"App.vue":[function(require,module,exports) {
-'use strict';
+},{}],"components\\RequestForm.vue":[function(require,module,exports) {
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-// helper function from MDN 
-var parseHeaders = function parseHeaders(xhr) {
-  var headers = xhr.getAllResponseHeaders().trim().split(/[\r\n]+/);
-  var headerMap = {};
-  headers.forEach(function (line) {
-    var parts = line.split(': ');
-    var header = parts.shift().toLowerCase();
-    var value = parts.join(': ');
-    headerMap[header] = value;
-  });
-  return headerMap;
-};
+var _parseHeaders = require("../helpers/parseHeaders.js");
+
+var _parseHeaders2 = _interopRequireDefault(_parseHeaders);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
   data: function data() {
     return {
-      method: 'GET',
-      url: 'https://yesno.wtf',
-      auth: 'none',
-      path: '/api',
-      httpUser: '',
-      httpPassword: '',
+      method: "GET",
+      url: "https://yesno.wtf",
+      auth: "none",
+      path: "/api",
+      httpUser: "",
+      httpPassword: "",
       params: [],
       bodyParams: [],
-      contentType: 'application/json',
+      contentType: "application/json",
       response: {
-        status: '',
-        headers: '',
+        status: "",
+        headers: "",
         body: ""
       }
     };
@@ -7811,13 +7745,13 @@ exports.default = {
     rawRequestBody: function rawRequestBody() {
       var bodyParams = this.bodyParams;
 
-      if (this.contentType === 'application/json') {
+      if (this.contentType === "application/json") {
         try {
-          var obj = JSON.parse('{\n            ' + bodyParams.filter(function (p) {
+          var obj = JSON.parse("{\n            " + bodyParams.filter(function (p) {
             return !!p.key;
           }).map(function (p) {
-            return '"' + p.key + '": "' + p.value + '"';
-          }).join() + '\n          }');
+            return "\"" + p.key + "\": \"" + p.value + "\"";
+          }).join() + "\n          }");
           return JSON.stringify(obj);
         } catch (ex) {
           return "invalid";
@@ -7826,17 +7760,17 @@ exports.default = {
         return bodyParams.filter(function (p) {
           return !!p.key;
         }).map(function (p) {
-          return p.key + '=' + encodeURIComponent(p.value);
-        }).join('&');
+          return p.key + "=" + encodeURIComponent(p.value);
+        }).join("&");
       }
     },
     queryString: function queryString() {
       var result = this.params.filter(function (p) {
         return !!p.key;
       }).map(function (p) {
-        return p.key + '=' + encodeURIComponent(p.value);
-      }).join('&');
-      return result == '' ? '' : '?' + result;
+        return p.key + "=" + encodeURIComponent(p.value);
+      }).join("&");
+      return result === "" ? "" : "?" + result;
     }
   },
   methods: {
@@ -7844,20 +7778,20 @@ exports.default = {
       var _this = this;
 
       var xhr = new XMLHttpRequest();
-      var user = this.auth === 'Basic' ? this.httpUser : null;
-      var pswd = this.auth === 'Basic' ? this.httpPassword : null;
+      var user = this.auth === "Basic" ? this.httpUser : null;
+      var pswd = this.auth === "Basic" ? this.httpPassword : null;
       xhr.open(this.method, this.url + this.path + this.queryString, true, user, pswd);
       if (this.method === "POST" || this.method === "PUT") {
         var requestBody = this.rawRequestBody;
-        xhr.setRequestHeader('Content-Length', requestBody.length);
-        xhr.setRequestHeader('Content-Type', this.contentType + '; charset=utf-8');
+        xhr.setRequestHeader("Content-Length", requestBody.length);
+        xhr.setRequestHeader("Content-Type", this.contentType + "; charset=utf-8");
         xhr.send(requestBody);
       } else {
         xhr.send();
       }
-      xhr.onload = function (e) {
+      xhr.onload = function () {
         _this.response.status = xhr.status;
-        var headers = _this.response.headers = parseHeaders(xhr);
+        var headers = _this.response.headers = (0, _parseHeaders2.default)(xhr);
         if ((headers["content-type"] || "").startsWith("application/json")) {
           _this.response.body = JSON.stringify(JSON.parse(xhr.responseText), null, 2);
         } else {
@@ -7866,36 +7800,111 @@ exports.default = {
       };
     },
     addRequestParam: function addRequestParam() {
-      this.params.push({ key: '', value: '' });
+      this.params.push({ key: "", value: "" });
       return false;
     },
     removeRequestParam: function removeRequestParam(index) {
       this.params.splice(index, 1);
     },
     addRequestBodyParam: function addRequestBodyParam() {
-      this.bodyParams.push({ key: '', value: '' });
+      this.bodyParams.push({ key: "", value: "" });
       return false;
     },
     removeRequestBodyParam: function removeRequestBodyParam(index) {
       this.bodyParams.splice(index, 1);
     }
   }
-};
-        var $fa0242 = exports.default || module.exports;
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+        var $204cb5 = exports.default || module.exports;
       
-      if (typeof $fa0242 === 'function') {
-        $fa0242 = $fa0242.options;
+      if (typeof $204cb5 === 'function') {
+        $204cb5 = $204cb5.options;
       }
     
         /* template */
-        Object.assign($fa0242, (function () {
+        Object.assign($204cb5, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", [
-    _c("h1", [_vm._v("API Request Builder")]),
-    _vm._v(" "),
+  return _c("div", [
     _c("fieldset", [
       _c("legend", [_vm._v("Request")]),
       _vm._v(" "),
@@ -8085,7 +8094,7 @@ exports.default = {
       _c(
         "ol",
         _vm._l(_vm.params, function(param, index) {
-          return _c("li", [
+          return _c("li", { key: param.key }, [
             _c("label", { attrs: { for: "param" + index } }, [_vm._v("Key")]),
             _vm._v(" "),
             _c("input", {
@@ -8199,7 +8208,7 @@ exports.default = {
           _c(
             "ol",
             _vm._l(_vm.bodyParams, function(param, index) {
-              return _c("li", [
+              return _c("li", { key: param.key }, [
                 _c("label", { attrs: { for: "bparam" + index } }, [
                   _vm._v("Key")
                 ]),
@@ -8277,7 +8286,7 @@ exports.default = {
       _c(
         "table",
         _vm._l(_vm.response.headers, function(value, key) {
-          return _c("tr", [
+          return _c("tr", { key: key }, [
             _c("td", { staticStyle: { width: "20%" } }, [
               _c("input", { attrs: { readonly: "" }, domProps: { value: key } })
             ]),
@@ -8292,9 +8301,26 @@ exports.default = {
         })
       ),
       _vm._v(" "),
-      _c("textarea", { attrs: { rows: "5", readonly: "" } }, [
-        _vm._v(_vm._s(_vm.response.body))
-      ])
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.response.body,
+            expression: "response.body"
+          }
+        ],
+        attrs: { rows: "5", readonly: "" },
+        domProps: { value: _vm.response.body },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.response, "body", $event.target.value)
+          }
+        }
+      })
     ])
   ])
 }
@@ -8305,7 +8331,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-fa0242",
+            _scopeId: null,
             functional: undefined
           };
         })());
@@ -8318,9 +8344,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$fa0242', $fa0242);
+            api.createRecord('$204cb5', $204cb5);
           } else {
-            api.reload('$fa0242', $fa0242);
+            api.reload('$204cb5', $204cb5);
           }
         }
 
@@ -8331,23 +8357,96 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"..\\node_modules\\parcel-bundler\\src\\builtins\\css-loader.js","vue-hot-reload-api":"..\\node_modules\\vue-hot-reload-api\\dist\\index.js","vue":"..\\node_modules\\vue\\dist\\vue.runtime.esm.js"}],"css\\styles.css":[function(require,module,exports) {
+},{"../helpers/parseHeaders.js":"helpers\\parseHeaders.js","_css_loader":"..\\node_modules\\parcel-bundler\\src\\builtins\\css-loader.js","vue-hot-reload-api":"..\\node_modules\\vue-hot-reload-api\\dist\\index.js","vue":"..\\node_modules\\vue\\dist\\vue.runtime.esm.js"}],"css\\variables.css":[function(require,module,exports) {
 
 var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"..\\node_modules\\parcel-bundler\\src\\builtins\\css-loader.js"}],"index.js":[function(require,module,exports) {
+},{"_css_loader":"..\\node_modules\\parcel-bundler\\src\\builtins\\css-loader.js"}],"components\\App.vue":[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _RequestForm = require('./RequestForm.vue');
+
+var _RequestForm2 = _interopRequireDefault(_RequestForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  components: {
+    RequestForm: _RequestForm2.default
+  }
+}; //
+//
+//
+//
+//
+//
+//
+        var $08a44b = exports.default || module.exports;
+      
+      if (typeof $08a44b === 'function') {
+        $08a44b = $08a44b.options;
+      }
+    
+        /* template */
+        Object.assign($08a44b, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "main",
+    [_c("h1", [_vm._v("API Request Builder")]), _vm._v(" "), _c("RequestForm")],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$08a44b', $08a44b);
+          } else {
+            api.reload('$08a44b', $08a44b);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"./RequestForm.vue":"components\\RequestForm.vue","../css/variables.css":"css\\variables.css","_css_loader":"..\\node_modules\\parcel-bundler\\src\\builtins\\css-loader.js","vue-hot-reload-api":"..\\node_modules\\vue-hot-reload-api\\dist\\index.js","vue":"..\\node_modules\\vue\\dist\\vue.runtime.esm.js"}],"index.js":[function(require,module,exports) {
 'use strict';
 
 var _vue = require('vue');
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _App = require('./App.vue');
+var _App = require('./components/App.vue');
 
 var _App2 = _interopRequireDefault(_App);
-
-require('./css/styles.css');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8357,7 +8456,7 @@ new _vue2.default({
     return h(_App2.default);
   }
 });
-},{"vue":"..\\node_modules\\vue\\dist\\vue.runtime.esm.js","./App.vue":"App.vue","./css/styles.css":"css\\styles.css"}],"..\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
+},{"vue":"..\\node_modules\\vue\\dist\\vue.runtime.esm.js","./components/App.vue":"components\\App.vue"}],"..\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -8386,7 +8485,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '55988' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '51171' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
