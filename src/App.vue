@@ -84,16 +84,16 @@ const parseHeaders = xhr => {
   const headers = xhr
     .getAllResponseHeaders()
     .trim()
-    .split(/[\r\n]+/);
-  const headerMap = {};
+    .split(/[\r\n]+/)
+  const headerMap = {}
   headers.forEach(function(line) {
-    const parts = line.split(": ");
-    const header = parts.shift().toLowerCase();
-    const value = parts.join(": ");
-    headerMap[header] = value;
-  });
-  return headerMap;
-};
+    const parts = line.split(": ")
+    const header = parts.shift().toLowerCase()
+    const value = parts.join(": ")
+    headerMap[header] = value
+  })
+  return headerMap
+}
 
 export default {
   data() {
@@ -112,91 +112,88 @@ export default {
         headers: "",
         body: ""
       }
-    };
+    }
   },
   computed: {
     rawRequestBody() {
-      const { bodyParams } = this;
+      const { bodyParams } = this
       if (this.contentType === "application/json") {
         try {
           const obj = JSON.parse(`{
-            ${bodyParams
-              .filter(p => !!p.key)
-              .map(p => `"${p.key}": "${p.value}"`)
-              .join()}
-          }`);
-          return JSON.stringify(obj);
+            ${bodyParams.filter(p => !!p.key).map(p => `"${p.key}": "${p.value}"`).join()}
+          }`)
+          return JSON.stringify(obj)
         } catch (ex) {
-          return "invalid";
+          return "invalid"
         }
       } else {
         return bodyParams
           .filter(p => !!p.key)
           .map(p => p.key + "=" + encodeURIComponent(p.value))
-          .join("&");
+          .join("&")
       }
     },
     queryString() {
       const result = this.params
         .filter(p => !!p.key)
         .map(p => p.key + "=" + encodeURIComponent(p.value))
-        .join("&");
-      return result === "" ? "" : "?" + result;
+        .join("&")
+      return result === "" ? "" : "?" + result
     }
   },
   methods: {
     sendRequest() {
-      const xhr = new XMLHttpRequest();
-      const user = this.auth === "Basic" ? this.httpUser : null;
-      const pswd = this.auth === "Basic" ? this.httpPassword : null;
+      const xhr = new XMLHttpRequest()
+      const user = this.auth === "Basic" ? this.httpUser : null
+      const pswd = this.auth === "Basic" ? this.httpPassword : null
       xhr.open(
         this.method,
         this.url + this.path + this.queryString,
         true,
         user,
         pswd
-      );
+      )
       if (this.method === "POST" || this.method === "PUT") {
-        const requestBody = this.rawRequestBody;
-        xhr.setRequestHeader("Content-Length", requestBody.length);
+        const requestBody = this.rawRequestBody
+        xhr.setRequestHeader("Content-Length", requestBody.length)
         xhr.setRequestHeader(
           "Content-Type",
           this.contentType + "; charset=utf-8"
-        );
-        xhr.send(requestBody);
+        )
+        xhr.send(requestBody)
       } else {
-        xhr.send();
+        xhr.send()
       }
-      xhr.onload = e => {
-        this.response.status = xhr.status;
-        const headers = (this.response.headers = parseHeaders(xhr));
+      xhr.onload = () => {
+        this.response.status = xhr.status
+        const headers = (this.response.headers = parseHeaders(xhr))
         if ((headers["content-type"] || "").startsWith("application/json")) {
           this.response.body = JSON.stringify(
             JSON.parse(xhr.responseText),
             null,
             2
-          );
+          )
         } else {
-          this.response.body = xhr.responseText;
+          this.response.body = xhr.responseText
         }
-      };
+      }
     },
     addRequestParam() {
-      this.params.push({ key: "", value: "" });
-      return false;
+      this.params.push({ key: "", value: "" })
+      return false
     },
     removeRequestParam(index) {
-      this.params.splice(index, 1);
+      this.params.splice(index, 1)
     },
     addRequestBodyParam() {
-      this.bodyParams.push({ key: "", value: "" });
-      return false;
+      this.bodyParams.push({ key: "", value: "" })
+      return false
     },
     removeRequestBodyParam(index) {
-      this.bodyParams.splice(index, 1);
+      this.bodyParams.splice(index, 1)
     }
   }
-};
+}
 </script>
 
 <style lang="css" scoped>
