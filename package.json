@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "fix:lint": "eslint --ext .js,.vue src --fix",
+    "test": "npm run lint -s",
     "start": "parcel src/index.html",
     "build": "parcel build --public-url . src/index.html",
     "clean": "rimraf dist/index.*.css dist/index.*.js dist/index.*.map",
