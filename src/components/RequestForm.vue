@@ -1,6 +1,5 @@
 <template lang="html">
-  <main>
-    <h1>API Request Builder</h1>
+  <div>
     <fieldset>
       <legend>Request</legend>
       <select v-model="method">
@@ -32,7 +31,7 @@
       <legend>Request Params</legend>
       <button @click="addRequestParam"> add param </button>
       <ol>
-        <li :key="param" v-for="(param, index) in params">
+        <li :key="param.key" v-for="(param, index) in params">
           <label :for="'param'+index">Key</label>
           <input :name="'param'+index" v-model="param.key">
           <label :for="'value'+index">Value</label>
@@ -53,7 +52,7 @@
       <button @click="addRequestBodyParam"> add param </button>
       </section>
       <ol>
-        <li :key="param" v-for="(param, index) in bodyParams">
+        <li :key="param.key" v-for="(param, index) in bodyParams">
           <label :for="'bparam'+index">Key</label>
           <input :name="'bparam'+index" v-model="param.key">
           <label :for="'bvalue'+index">Value</label>
@@ -74,26 +73,11 @@
       </table>
       <textarea rows="5" readonly v-model="response.body"></textarea>
     </fieldset>
-  </main>
+  </div>
 </template>
 
 <script>
-// helper function from MDN
-// https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders
-const parseHeaders = xhr => {
-  const headers = xhr
-    .getAllResponseHeaders()
-    .trim()
-    .split(/[\r\n]+/)
-  const headerMap = {}
-  headers.forEach(function(line) {
-    const parts = line.split(": ")
-    const header = parts.shift().toLowerCase()
-    const value = parts.join(": ")
-    headerMap[header] = value
-  })
-  return headerMap
-}
+import parseHeaders from '../helpers/parseHeaders.js'
 
 export default {
   data() {
@@ -196,12 +180,7 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
-
-main {
-  max-width: 1000px;
-  margin: 0 auto;
-}
+<style lang="css">
 
 fieldset {
   margin: 1em 0;

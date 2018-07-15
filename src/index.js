@@ -1,7 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
-
-import './css/styles.css'
+import App from './components/App.vue'
 
 new Vue({
   el: '#app',

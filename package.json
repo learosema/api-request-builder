@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/terabaud/api-request-builder#readme",
   "dependencies": {
-    "css": "^2.2.3",
     "vue": "^2.5.16",
     "vue-hot-reload-api": "^2.3.0"
   },
