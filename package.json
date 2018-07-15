@@ -9,7 +9,7 @@
     "test": "npm run lint -s",
     "start": "parcel src/index.html",
     "build": "parcel build --public-url . src/index.html",
-    "clean": "rimraf dist/index.*.css dist/index.*.js dist/index.*.map",
+    "clean": "rimraf dist/index.html dist/src.*.css dist/src.*.js dist/src.*.map",
     "predeploy": "npm run clean -s && npm run build -s",
     "deploy": "gh-pages -d dist"
   },
