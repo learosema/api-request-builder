@@ -2,7 +2,6 @@
   "name": "api-request-builder",
   "version": "1.0.0",
   "description": "A playground for XMLHttpRequests",
-  "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "fix:lint": "eslint --ext .js,.vue src --fix",
