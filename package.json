@@ -40,7 +40,7 @@
     "parcel-plugin-eslint": "^1.0.4",
     "postcss-modules": "^1.5.0",
     "postcss-preset-env": "^5.2.1",
-    "pug": "^2.0.3",
+    "pug": "^2.0.4",
     "rimraf": "^3.0.2",
     "vue-template-compiler": "^2.6.11"
   }
