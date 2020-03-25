@@ -1,25 +1,26 @@
 <template>
   <main>
     <h1>API Request Builder</h1>
-    <RequestForm/>
+    <RequestForm />
   </main>
 </template>
 
 <script>
-import RequestForm from './RequestForm.vue'
+import RequestForm from "./RequestForm.vue";
 
 export default {
   components: {
-    RequestForm
-  }
-}
+    RequestForm,
+  },
+};
 </script>
 
 <style>
-@import '../css/variables.css';
+@import "../css/variables.css";
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 100%;
   line-height: 1.2;
 }
@@ -30,7 +31,7 @@ main {
 }
 
 h1 {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   color: var(--lieblingsfarbe);
 }
 </style>
