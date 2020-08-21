@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/terabaud/api-request-builder#readme",
   "dependencies": {
-    "vue": "^2.6.11",
+    "vue": "^2.6.12",
     "vue-hot-reload-api": "^2.3.4"
   },
   "devDependencies": {
@@ -42,7 +42,7 @@
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   },
   "husky": {
     "hooks": {
